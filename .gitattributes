@@ -1,11 +1,40 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+<?php
+require_once "conexion.php";
+$padre=$_POST['idpadre'];  //guardar
+$hijo=$_POST['idhijo'];  //guardar
+$nieto=$_POST['idnieto'];  //guardar
 
-# Custom for Visual Studio
-*.cs     diff=csharp
+$sql = mysql_query("select * from db_sistemas.tbl_submodulos where id_submodulo='$nieto'");
+$row = mysql_fetch_array($sql);
+$submodulo=$row['nombre_submodulo'];
+$atiende=$row['id_atiende'];   //guardar
 
-# Standard to msysgit
-*.doc	 diff=astextplain
-*.DOC	 diff=astextplain
-*.do*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+$sql1 = mysql_query("select * from db_sistemas.tbl_modulos where id_modulo='$hijo'");
+$row1 = mysql_fetch_array($sql1);
+$modulo=$row1['nombre_modulo'];
+
+$sql2 = mysql_query("select * from db_sistemas.tbl_sistemas where id_sistema='$padre'");
+$row2 = mysql_fetch_array($sql2);
+$sistema=$row2['nombre_sistema'];
+
+$sql3 = mysql_query("select * from db_rh.tbl_empleadosglobal where ClaveEmpleado='$atiende'");
+$row3 = mysql_fetch_array($sql3);
+$nombre=$row3['Nombres']." ".$row3['Apellidos'];
+
+echo "Sistema: ",$sistema,"<br>";
+echo "Modulo: ",$modulo,"<br>";
+echo "Submodulo: ",$submodulo,"<br>";
+echo "Atiende: ",$nombre,"<br>";
+
+$target_path = "uploads/";
+$target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
+if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) 
+{ 
+echo "<span style='color:green;'>El archivo ". basename( $_FILES['uploadedfile']['name']). " ha sido subido</span><br>";
+}else{
+echo "Ha ocurrido un error, trate de nuevo!";
+} 
+
+$nombre_imagen=basename( $_FILES['uploadedfile']['name']);
+$img="uploads/".$nombre_imagen;   //guardar
+?>
