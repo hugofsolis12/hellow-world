@@ -4,7 +4,7 @@ $padre=$_POST['idpadre'];  //guardar
 $hijo=$_POST['idhijo'];  //guardar
 $nieto=$_POST['idnieto'];  //guardar
 
-$sql = mysql_query("select * from db_sistemas.tbl_submodulos where id_submodulo='$nieto'");
+// $sql = mysql_query("select * from db_sistemas.tbl_submodulos where id_submodulo='$nieto'");
 $row = mysql_fetch_array($sql);
 $submodulo=$row['nombre_submodulo'];
 $atiende=$row['id_atiende'];   //guardar
